@@ -7,20 +7,20 @@
 */
 
 #include <iostream>
-#include <vector>
 #include <utility>
+#include <vector>
 
 using namespace std;
 
 static int FILL = 2;
 static int EMPTY = -1;
 
-struct coinResults {
+struct coinStruct {
     int max = 0;
     vector<vector<int> > board;
 };
 
-coinResults cResults(vector<vector<int>> coin) {
+coinStruct cResults(vector<vector<int>> coin) {
     int width = coin.size();
     int height = coin[0].size();
     
@@ -32,14 +32,12 @@ coinResults cResults(vector<vector<int>> coin) {
         if (coin[1][i] == FILL) {
             side[1][i] = EMPTY;
         } else {
-
             if (side[1][i - 1] == EMPTY)
                 side[1][i] = EMPTY;
             else
                 side[1][i] = side[1][i - 1] + coin[1][i];
         }
     }
-
 
     for (int j = 2; j < side.size(); j++) {
 
@@ -66,7 +64,7 @@ coinResults cResults(vector<vector<int>> coin) {
 
     int row = coin.size() - 1;
     int col = coin[0].size() - 1;
-    coinResults results;
+    coinStruct results;
     results.max = side[row][col];
     results.board = side;
     return results;
@@ -119,7 +117,7 @@ int main() {
         }
     }
 
-    coinResults results = cResults(coinBoard);
+    coinStruct results = cResults(coinBoard);
     vector<pair<int, int>> path = returnPath(results.board);
 
     //Display
